@@ -24,6 +24,20 @@ class UserTest extends TestCase
 
 
     /**
+     * Test user exists on creation.
+     *
+     * @return void
+     */
+    public function testUserExistsOnCreation()
+    {
+        $user = factory(\App\User::class)->create();
+        $userCount = \App\User::where('id', $user->id)->count();
+
+        $this->assertGreaterThan(0, $userCount);
+    }
+
+
+    /**
      * Test if fetching all users returns all results.
      *
      * @return void
