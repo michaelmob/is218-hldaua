@@ -49,13 +49,32 @@ class UserTest extends TestCase
 
         $this->assertCount($userCount, $users);
     }
+
+
     /**
-     * A basic unit test example.
+     * Test setting a user name.
      *
      * @return void
      */
-    public function testUserExists()
+    public function testSettingUsername()
     {
-        $this->assertTrue(true);
+        $user = factory(\App\User::class)->make(['name' => 'Test User']);
+        $this->assertEquals($user->name, 'Test User');
+    }
+
+
+    /**
+     * Test deleting a user.
+     *
+     * @return void
+     */
+    public function testDeletingAUser()
+    {
+        $user = factory(\App\User::class)->create(['name' => 'Test User']);
+        $user->delete();
+
+        $userCount = \App\User::where('id', $user->id)->count();
+
+        $this->assertLessThan(1, $userCount);
     }
 }
